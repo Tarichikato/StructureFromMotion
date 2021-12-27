@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import sift
+import os
 
 class Image():
     def __init__(self,array,id):
@@ -13,3 +14,12 @@ class Image():
     def get_kp_d(self):
         kp , d = sift.get_kp_d(self.array)
         return kp,d
+
+def create_views(dir):
+    views = []
+    for id, image in enumerate(os.listdir(dir)):
+        img = cv2.imread(f"{dir}/{image}")
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        view = Image(img, id)
+        views.append(view)
+    return views
